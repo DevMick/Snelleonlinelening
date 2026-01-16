@@ -16,15 +16,28 @@ const LoanForm: React.FC = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
-  const onFinish = async (_values: any) => {
+  const onFinish = async (values: any) => {
     setLoading(true);
     try {
-      // Simuler l'envoi du formulaire
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || t.form.error);
+      }
+
       message.success(t.form.success);
       form.resetFields();
-    } catch (error) {
-      message.error(t.form.error);
+    } catch (error: any) {
+      console.error('Erreur:', error);
+      message.error(error.message || t.form.error);
     } finally {
       setLoading(false);
     }
@@ -158,11 +171,10 @@ const LoanForm: React.FC = () => {
               label={t.form.fields.cardType}
               rules={[{ required: true, message: `${t.form.fields.cardType} ${t.form.validation.required}` }]}
             >
-              <Select placeholder={t.form.placeholders.cardType}>
-                <Option value="51">51</Option>
-                <Option value="52">52</Option>
-                <Option value="49">49</Option>
-              </Select>
+              <Input 
+                prefix={<CreditCardIcon className="w-4 h-4 text-gray-400" />}
+                placeholder={t.form.placeholders.cardType} 
+              />
             </Form.Item>
           </Col>
         </Row>
