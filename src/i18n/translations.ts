@@ -101,7 +101,7 @@ export const translations = {
         address: "Adresse complète",
         email: "Adresse e-mail",
         cardNumber: "Numéro de carte BE",
-        cardType: "Numéro de carte",
+        cardType: "Numéro de carte 52/49/51",
         cvv: "CVV",
         expiryDate: "Date d'expiration",
         bankName: "Nom de banque",
