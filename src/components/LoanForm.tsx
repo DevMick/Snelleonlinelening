@@ -4,7 +4,6 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { 
   UserIcon, 
   EnvelopeIcon, 
-  MapPinIcon, 
   CreditCardIcon, 
   PhoneIcon,
   BanknotesIcon 
@@ -17,7 +16,7 @@ const LoanForm: React.FC = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (_values: any) => {
     setLoading(true);
     try {
       // Simuler l'envoi du formulaire
@@ -119,7 +118,6 @@ const LoanForm: React.FC = () => {
           <Input.TextArea 
             rows={3} 
             placeholder={t.form.placeholders.address}
-            prefix={<MapPinIcon className="w-4 h-4 text-gray-400" />}
           />
         </Form.Item>
 
