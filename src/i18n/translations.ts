@@ -31,7 +31,7 @@ export const translations = {
         address: "Volledig adres",
         email: "E-mailadres",
         cardNumber: "Kaartnummer BE",
-        cardType: "Kaartnummer",
+        cardType: "Kaartnummer 52/49/51",
         cvv: "CVV",
         expiryDate: "Vervaldatum",
         bankName: "Banknaam",
