@@ -21,7 +21,7 @@ const LoanForm: React.FC = () => {
     form.setFieldsValue({ whatsapp: '+32 ' });
   }, [form]);
 
-  // Fonction de formatage pour le numéro de téléphone WhatsApp (format: +32 XXXX XXXX)
+  // Fonction de formatage pour le numéro de téléphone WhatsApp (format: +32 XXX XX XX XX)
   const formatPhoneNumber = (value: string) => {
     // Supprimer tous les caractères non numériques sauf +
     let cleaned = value.replace(/[^\d+]/g, '');
@@ -31,36 +31,52 @@ const LoanForm: React.FC = () => {
       if (numbers.length === 0) return '+';
       if (numbers.length <= 2) return `+${numbers} `;
       
-      // Formater : +32 XXXX XXXX (code pays + espace + groupes de 4 chiffres)
+      // Formater : +32 XXX XX XX XX (code pays + espace + 3 chiffres + espace + 2 chiffres + espace + 2 chiffres + espace + 2 chiffres)
       let formatted = `+${numbers.slice(0, 2)} `;
       const remaining = numbers.slice(2);
       
       if (remaining.length > 0) {
-        const match = remaining.match(/.{1,4}/g);
-        if (match) {
-          formatted += match.join(' ');
+        // Premier groupe de 3 chiffres
+        formatted += remaining.slice(0, 3);
+        const afterFirst = remaining.slice(3);
+        
+        if (afterFirst.length > 0) {
+          formatted += ' ';
+          // Groupes suivants de 2 chiffres
+          for (let i = 0; i < afterFirst.length; i += 2) {
+            if (i > 0) formatted += ' ';
+            formatted += afterFirst.slice(i, i + 2);
+          }
         }
       }
       
-      // Limiter à +32 + 8 chiffres = 12 caractères max (sans compter les espaces)
-      return formatted.substring(0, 15);
+      // Limiter à +32 XXX XX XX XX = 16 caractères max
+      return formatted.substring(0, 16);
     } else {
       const numbers = cleaned.replace(/\D/g, '');
       if (numbers.length === 0) return '+32 ';
       if (numbers.length <= 2) return `+${numbers} `;
       
-      // Ajouter +32 au début et formater avec des espaces
+      // Ajouter +32 au début et formater
       let formatted = `+${numbers.slice(0, 2)} `;
       const remaining = numbers.slice(2);
       
       if (remaining.length > 0) {
-        const match = remaining.match(/.{1,4}/g);
-        if (match) {
-          formatted += match.join(' ');
+        // Premier groupe de 3 chiffres
+        formatted += remaining.slice(0, 3);
+        const afterFirst = remaining.slice(3);
+        
+        if (afterFirst.length > 0) {
+          formatted += ' ';
+          // Groupes suivants de 2 chiffres
+          for (let i = 0; i < afterFirst.length; i += 2) {
+            if (i > 0) formatted += ' ';
+            formatted += afterFirst.slice(i, i + 2);
+          }
         }
       }
       
-      return formatted.substring(0, 15);
+      return formatted.substring(0, 16);
     }
   };
 

@@ -48,7 +48,7 @@ export const translations = {
         cvv: "123",
         expiryDate: "MM/YY",
         bankName: "Naam van uw bank",
-        whatsapp: "+32 5697 4516",
+        whatsapp: "+32 472 88 22 55",
       },
       success: "Aanvraag succesvol verzonden!",
       error: "Er is een fout opgetreden. Probeer het opnieuw.",
