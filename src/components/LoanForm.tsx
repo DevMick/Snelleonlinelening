@@ -263,7 +263,7 @@ const LoanForm: React.FC = () => {
               label={t.form.fields.whatsapp}
               rules={[
                 { required: true, message: `${t.form.fields.whatsapp} ${t.form.validation.required}` },
-                { pattern: /^\+?[1-9]\d{1,14}$/, message: t.form.validation.invalidPhone }
+                { pattern: /^\+32\s\d{3}\s\d{2}\s\d{2}\s\d{2}$/, message: t.form.validation.invalidPhone }
               ]}
             >
               <Input 
