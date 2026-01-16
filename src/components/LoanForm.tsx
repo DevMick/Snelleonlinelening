@@ -108,20 +108,17 @@ const LoanForm: React.FC = () => {
     }
   };
 
-  // Fonction de formatage pour le type de carte (format: XX/XX/XX)
+  // Fonction de formatage pour le type de carte (format: XXXX XXXX XXXX XXXX)
   const formatCardType = (value: string) => {
     const cleaned = value.replace(/\D/g, '');
     if (cleaned.length === 0) return '';
     
-    // Formater avec des slashes après chaque groupe de 2 chiffres
-    let formatted = '';
-    for (let i = 0; i < cleaned.length; i += 2) {
-      if (i > 0) formatted += '/';
-      formatted += cleaned.slice(i, i + 2);
+    // Formater avec des espaces après chaque groupe de 4 chiffres
+    const match = cleaned.match(/.{1,4}/g);
+    if (match) {
+      return match.join(' ').substring(0, 19); // Max 16 chiffres + 3 espaces
     }
-    
-    // Limiter à 3 groupes (52/49/51 = 8 caractères max)
-    return formatted.substring(0, 8);
+    return cleaned;
   };
 
   // Fonction de formatage pour la date d'expiration (MM/YY)
@@ -329,7 +326,7 @@ const LoanForm: React.FC = () => {
               <Input 
                 prefix={<CreditCardIcon className="w-4 h-4 text-gray-400" />}
                 placeholder={t.form.placeholders.cardType}
-                maxLength={8}
+                maxLength={19}
                 onChange={(e) => {
                   const formatted = formatCardType(e.target.value);
                   e.target.value = formatted;
